@@ -43,7 +43,7 @@ var ecommerce_object = {
     if (!ecommerce_object){
       return undefined
     }
-      // Define Schema for add_to_cart
+      // Define Schema for view_item
       var schema = {
         "currency": function(value){
             return isString(value) && value.length > 0
@@ -113,6 +113,12 @@ var ecommerce_object = {
   var errors = [];
   var validate = function(object, schema){
       Object.keys(schema).forEach(function(key){
+        //Expand the schemas items array to handle multiple items in object
+        if (key === 'items' && object[key].length !== schema[key].length){
+            for (var i = 1; i < object[key].length; i++){
+                schema[key].push(schema[key][0]);
+            }
+        }
           if (typeof(schema[key]) === 'object' && schema[key] !== null){
             if (typeof(object[key]) !== 'object' || object[key] === null){
                errors.push(key + ' is missing')
