@@ -174,67 +174,71 @@ ___TEMPLATE_PARAMETERS___
         "type": "CHECKBOX",
         "name": "item_id",
         "checkboxText": "item_id",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": true
       },
       {
         "type": "CHECKBOX",
         "name": "item_name",
         "checkboxText": "item_name",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": true
       },
       {
         "type": "CHECKBOX",
         "name": "affiliation",
         "checkboxText": "affiliation",
-        "simpleValueType": true
-      },
-      {
-        "type": "CHECKBOX",
-        "name": "coupon",
-        "checkboxText": "coupon",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
         "name": "index",
         "checkboxText": "index",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
         "name": "item_brand",
         "checkboxText": "item_brand",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": true
       },
       {
         "type": "CHECKBOX",
         "name": "item_category",
         "checkboxText": "item_category",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": true
       },
       {
         "type": "CHECKBOX",
         "name": "item_category2",
         "checkboxText": "item_category2",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
         "name": "item_category3",
         "checkboxText": "item_category3",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
         "name": "item_category4",
         "checkboxText": "item_category4",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
         "name": "item_category5",
         "checkboxText": "item_category5",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
@@ -257,7 +261,8 @@ ___TEMPLATE_PARAMETERS___
               }
             ]
           }
-        ]
+        ],
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
@@ -280,31 +285,36 @@ ___TEMPLATE_PARAMETERS___
               }
             ]
           }
-        ]
+        ],
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
         "name": "item_variant",
         "checkboxText": "item_variant",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": true
       },
       {
         "type": "CHECKBOX",
         "name": "location_id",
         "checkboxText": "location_id",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": false
       },
       {
         "type": "CHECKBOX",
         "name": "price",
         "checkboxText": "price",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": true
       },
       {
         "type": "CHECKBOX",
         "name": "quantity",
         "checkboxText": "quantity",
-        "simpleValueType": true
+        "simpleValueType": true,
+        "defaultValue": true
       }
     ]
   },
@@ -371,6 +381,15 @@ ___TEMPLATE_PARAMETERS___
           },
           {
             "param": {
+              "type": "CHECKBOX",
+              "name": "longerThan0",
+              "checkboxText": "Longer than 0",
+              "simpleValueType": true
+            },
+            "isUnique": false
+          },
+          {
+            "param": {
               "type": "SELECT",
               "name": "parameterType",
               "displayName": "Parameter Type",
@@ -385,12 +404,7 @@ ___TEMPLATE_PARAMETERS___
                   "displayValue": "Item"
                 }
               ],
-              "simpleValueType": true,
-              "valueValidators": [
-                {
-                  "type": "NON_EMPTY"
-                }
-              ]
+              "simpleValueType": true
             },
             "isUnique": false
           }
@@ -1416,3 +1430,5 @@ setup: |-
 ___NOTES___
 
 Created on 20/01/2025, 22:22:29
+
+
