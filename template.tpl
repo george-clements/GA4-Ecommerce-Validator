@@ -530,9 +530,6 @@ var schema = {
         affiliation: function(value){
             return isString(value) && longerThan0(value);
         },
-        coupon: function(value){
-            return isString(value);
-        },
         discount: function(value){
             return isNumber(value);
         },
