@@ -1,5 +1,5 @@
 homepage: "https://codequackers.io/"
 documentation: "https://github.com/george-clements/GA4-Ecommerce-Validator/#readme"
 versions:
-  - sha: 1174abb7e4978500c1351d8216b22a8a24370548
+  - sha: c26e22eac07c0796285603cbb29790d1ea2fa654
     changeNotes: Initial release.
