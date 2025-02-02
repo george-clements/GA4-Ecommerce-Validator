@@ -14,7 +14,10 @@ ___INFO___
   "version": 1,
   "securityGroups": [],
   "displayName": "GA4 Ecommerce Validator",
-  "categories": ["TAG_MANAGEMENT", "UTILITY"],
+  "categories": [
+    "TAG_MANAGEMENT",
+    "UTILITY"
+  ],
   "brand": {
     "id": "github.com gtm-templates-george-clements",
     "displayName": "gtm-templates-george-clements",
@@ -25,6 +28,7 @@ ___INFO___
     "WEB"
   ]
 }
+
 
 ___TEMPLATE_PARAMETERS___
 
@@ -567,9 +571,6 @@ var schema = {
         },
         price: function(value){
             return isNumber(value);
-        },
-        quantity: function(value){
-            return isNumber(value) && value > 0;
         }
     }]
 };
@@ -583,15 +584,24 @@ if (data.event === 'purchase'){
   };
 }
 
+// If event isn't view_item_list or select_item require value
 if (['view_item_list', 'select_item'].indexOf(data.event) === -1){
   schema.value = function(value){
         return isNumber(value);
     };
 }
 
+// If value is present in the event schema, also require currency
 if (getType(schema.value) === 'function'){
   schema.currency = function(value){
         return isString(value) && isCurrencyCode(value);
+    };
+}
+
+// Quantity becomes important in the lower funnel
+if (['view_item_list', 'view_item', 'select_item'].indexOf(data.event) === -1){
+  schema.items[0].quantity = function(value){
+        return isNumber(value) && value > 0;
     };
 }
 
@@ -1783,6 +1793,91 @@ scenarios:
     });
 
     const expectedPushedEvents = [{ event: "dataLayer_validator", validator_event_name: "view_item", invalid: '["value_failed_with_20.73"]'}];
+
+    // Call runCode to run the template's code.
+    runCode(mockData);
+
+    // Verify that the tag finished successfully.
+    assertThat(pushedEvents).isEqualTo(expectedPushedEvents);
+    assertApi('gtmOnSuccess').wasCalled();
+- name: Add to Cart - Quantity Missing
+  code: |-
+    const mockData = {
+        "ecommerce_source": "javascript_variable",
+        "quantity": true,
+        "item_id": true,
+        "item_category4": false,
+        "index": true,
+        "item_category5": false,
+        "item_name": true,
+        "item_category2": false,
+        "item_category3": false,
+        "item_brand": true,
+        "item_category": true,
+        "location_id": false,
+        "add_to_cart": {
+            currency: "USD",
+            value: 30.03,
+            items: [
+                {
+                    item_id: "SKU_12345",
+                    item_name: "Stan and Friends Tee",
+                    affiliation: "Google Merchandise Store",
+                    coupon: "SUMMER_FUN",
+                    discount: 2.22,
+                    index: 0,
+                    item_brand: "Google",
+                    item_category: "Apparel",
+                    item_category2: "Adult",
+                    item_category3: "Shirts",
+                    item_category4: "Crew",
+                    item_category5: "Short sleeve",
+                    item_list_id: "related_products",
+                    item_list_name: "Related Products",
+                    item_variant: "green",
+                    location_id: "ChIJIQBpAG2ahYAR_6128GcTUEo",
+                    price: 10.01,
+                    item_type: "Clothing",
+                    item_color: "Green"
+                }
+            ]
+        },
+        "event_regex_item_list_name": "view_item|add_to_cart",
+        "additional_parameters": [
+        {
+            "parameterName": "item_type",
+            "parameterType": "item",
+            "number_or_string": "string",
+            "fatFinger": false
+        },
+        {
+            "parameterName": "item_color",
+            "parameterType": "item",
+            "number_or_string": "string",
+            "fatFinger": true
+        }
+    ],
+        "item_list_id": false,
+        "accept_empty_string_for_prices": true,
+        "affiliation": true,
+        "fatFinger": true,
+        "item_list_name": true,
+        "price": true,
+        "accept_string_for_prices": true,
+        "item_variant": true,
+    };
+
+    mock('copyFromDataLayer', key => {
+      if (key === "event") {
+        return 'add_to_cart';
+      }
+    });
+
+    const expectedPushedEvents = [
+        // Define the expected pushed events based on your template logic
+        { event: "dataLayer_validator", validator_event_name: "add_to_cart", invalid: '["quantity_missing"]'}
+        // Add other expected pushed events here based on your logic
+    ];
 
     // Call runCode to run the template's code.
     runCode(mockData);
