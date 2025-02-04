@@ -361,6 +361,13 @@ ___TEMPLATE_PARAMETERS___
         "checkboxText": "quantity",
         "simpleValueType": true,
         "defaultValue": true
+      },
+      {
+        "type": "CHECKBOX",
+        "name": "discount",
+        "checkboxText": "discount",
+        "simpleValueType": true,
+        "defaultValue": false
       }
     ],
     "help": "Enable the item parameters to validate"
@@ -529,6 +536,9 @@ var schema = {
         },
         affiliation: function(value){
             return isString(value) && longerThan0(value);
+        },
+        coupon: function(value){
+            return isString(value);
         },
         discount: function(value){
             return isNumber(value);
